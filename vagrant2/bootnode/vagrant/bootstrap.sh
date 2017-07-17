@@ -2,6 +2,8 @@
 
 set -eu -o pipefail
 
+
+
 # install build deps
 add-apt-repository ppa:ethereum/ethereum
 apt-get update
@@ -24,20 +26,22 @@ PATH=$PATH:/usr/local/go/bin
 echo 'PATH=$PATH:/usr/local/go/bin' >> /home/ubuntu/.bashrc
 
 # make/install quorum
-git clone https://github.com/jpmorganchase/quorum.git
-pushd quorum >/dev/null
-git checkout tags/v1.1.0
+git clone https://JullienSue@bitbucket.org/joch-/stentor-block-chain.git
+pushd stentor-block-chain >/dev/null
+# git checkout tags/v1.1.0
 make all
+
 cp build/bin/geth /usr/local/bin
 cp build/bin/bootnode /usr/local/bin
 popd >/dev/null
 
 # copy examples
-cp -r /vagrant/examples /home/ubuntu/quorum-examples
-chown -R ubuntu:ubuntu /home/ubuntu/quorum /home/ubuntu/quorum-examples
+cp -r /home/ubuntu/stentor-block-chain/vagrant2/bootnode/examples/7nodes /home/ubuntu/stentor-examples
+chown -R ubuntu:ubuntu /home/ubuntu/stentor-examples
+chmod +x /home/ubuntu/stentor-examples/*.sh
 
 # done!
-banner "Quorum"
+banner "Stentor"
 echo
-echo 'The Quorum vagrant instance has been provisioned. Examples are available in ~/quorum-examples inside the instance.'
+echo 'The Stentor vagrant instance has been provisioned. Examples are available in ~/stentor-examples inside the instance.'
 echo "Use 'vagrant ssh' to open a terminal, 'vagrant suspend' to stop the instance, and 'vagrant destroy' to remove it."

@@ -45,6 +45,7 @@ PRIVATE_CONFIG=tm7.conf nohup geth --datadir qdata/dd7 $GLOBAL_ARGS --rpcport 22
 
 echo "[*] Waiting for nodes to start"
 sleep 10
+
 echo "[*] Sending first transaction"
 PRIVATE_CONFIG=tm1.conf geth --exec 'loadScript("script1.js")' attach ipc:qdata/dd1/geth.ipc
 
