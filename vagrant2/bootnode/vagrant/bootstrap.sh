@@ -26,8 +26,8 @@ PATH=$PATH:/usr/local/go/bin
 echo 'PATH=$PATH:/usr/local/go/bin' >> /home/ubuntu/.bashrc
 
 # make/install quorum
-git clone https://JullienSue@bitbucket.org/joch-/stentor-block-chain.git
-pushd stentor-block-chain >/dev/null
+git clone https://github.com/AlphaSue/stentor-blockchain
+pushd stentor-blockchain >/dev/null
 # git checkout tags/v1.1.0
 make all
 
@@ -35,10 +35,13 @@ cp build/bin/geth /usr/local/bin
 cp build/bin/bootnode /usr/local/bin
 popd >/dev/null
 
+#clone example
+git clone https://github.com/AlphaSue/stentor-examples
+
 # copy examples
-cp -r /home/ubuntu/stentor-block-chain/vagrant2/bootnode/examples/7nodes /home/ubuntu/stentor-examples
-chown -R ubuntu:ubuntu /home/ubuntu/stentor-examples
-chmod +x /home/ubuntu/stentor-examples/*.sh
+cp -r /home/ubuntu/stentor-examples/vagrant2/bootnode/examples/7nodes /home/ubuntu/stentor-7nodes
+chown -R ubuntu:ubuntu /home/ubuntu/stentor-7nodes
+chmod +x /home/ubuntu/stentor-7nodes/*.sh
 
 # done!
 banner "Stentor"
