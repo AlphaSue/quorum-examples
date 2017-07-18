@@ -1,1 +1,1 @@
-{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/jonathan/projects/stentor-block-chain/vagrant","disabled":false,"__vagrantfile":true}}}
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/jonathan/projects/stentor-examples/vagrant","disabled":false,"__vagrantfile":true}}}
