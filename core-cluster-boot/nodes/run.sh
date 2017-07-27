@@ -11,8 +11,7 @@ log() {
 kill-if-running() {
   for p in "$@"; do
     if pgrep -x "$p" &>/dev/null; then
-      log "$p is already running; killing..."
-      killall $p
+      log "$p is already running; killing..." killall $p
     fi
   done
 }
@@ -42,6 +41,10 @@ constellation-node constellation/node.conf &>/dev/null &
 log "starting constellation for node 2 on port 9001..."
 constellation-node constellation2/node.conf &>/dev/null &
 
+if [ ! -d "node/geth" ] || [ ! -d "node2/geth" ]; then
+  log "You must execute 'init.sh' before running"
+  exit 1
+fi
 
 # start node 1
 log "copying static-nodes to node"
@@ -58,8 +61,8 @@ geth --datadir node $ARGS --port 33000 \
 log "copying static-nodes to node2"
 cp -rf static-nodes.json node/
 
-log "starting node at 127.0.0.1:33000 (8545)..."
-geth --datadir node2 $ARGS --port 33000 --rpcport 8545 \
+log "starting node at 127.0.0.1:33001 (8546)..."
+geth --datadir node2 $ARGS --port 33001 --rpcport 8546 \
   --verbosity 5 \
   --blockmakeraccount "0xa0efc843a204d1ccdb1854b2735f064e9bfdd18f" \
   --blockmakerpassword "" &>/dev/null &
@@ -68,7 +71,7 @@ if [ "$1" == "console" ]; then
 
   ATTACH_NODE=${2-node}
 
-  log "waiting 3s for node to start"
+  log "waiting 3s for ${ATTACH_NODE} to start"
   sleep 3
   geth attach ${ATTACH_NODE}/geth.ipc
 
