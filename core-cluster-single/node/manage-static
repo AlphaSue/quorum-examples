@@ -3,7 +3,7 @@
 import argparse, json, re
 from pprint import PrettyPrinter
 
-version = '0.0.3'
+version = '0.0.4'
 data = []
 pp = PrettyPrinter(compact=True)
 
@@ -17,31 +17,13 @@ def valid_enode(e):
         raise argparse.ArgumentTypeError(msg)
 
 
-def has_enode(enode):
-    return valid_enode(enode) and enode in data
-
-
-def can_add_enode(enode):
-    if not has_enode(enode):
-        return enode
-
-    raise argparse.ArgumentTypeError('Enode is not a static node.')
-
-
-def can_remove_enode(enode):
-    if has_enode(enode):
-        return enode
-
-    raise argparse.ArgumentTypeError('Enode is not a static node.')
-
-
 def parse_args():
     # top-level parser
     description = ('Manages static-nodes.json file '
                    'for Stentor Blockchain core-cluster nodes')
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-d', '--data', default="static-nodes.json",
-                        help='specify path to static-nodes.json')
+                        help='Specify path to static-nodes.json')
     parser.add_argument('--version', action='version', version='%(prog)s v{}'.format(version))
     subparsers = parser.add_subparsers(help='Commands', dest='command')
 
@@ -50,17 +32,17 @@ def parse_args():
 
     # has enode parser
     add_parser = subparsers.add_parser('has', help='Check if enode is static')
-    add_parser.add_argument('enode', help='specify an enode')
+    add_parser.add_argument('enode', help='Specify an enode')
 
     # add enode parser
     add_parser = subparsers.add_parser('add', help='Add an enode')
-    add_parser.add_argument('enode', type=can_add_enode, help='specify an enode')
+    add_parser.add_argument('enode', type=valid_enode, help='Specify an enode')
 
     # remove enode parser
     remove_parser = subparsers.add_parser('remove', help='Remove an enode',
                                           aliases=['rm'])
-    remove_parser.add_argument('enode', type=valid_enode,
-                               help='specify an enode')
+    remove_parser.add_argument('enode', help='Specify an enode or all',
+                               type=lambda e: e if e == 'all' or valid_enode(e) else None)
 
     args = parser.parse_args()
 
@@ -86,26 +68,52 @@ def write_data(data_file):
         f.write(json.dumps(data))
 
 
+def has_enode(enode):
+    return valid_enode(enode) and enode in data
+
+
+def can_add_enode(enode):
+    if not has_enode(enode):
+        return enode
+
+    raise ValueError('Enode is not a static node.')
+
+
+def can_remove_enode(enode):
+    if has_enode(enode):
+        return enode
+
+    raise ValueError('Enode is not a static node.')
+
+
 def handle_list():
-    print('Current Enodes')
+    print('Current enodes:')
     pp.pprint(data)
 
 
 def handle_add(enode):
-    data.append(enode)
-    print('Done.')
-    handle_list()
+    if can_add_enode(enode):
+        data.append(enode)
+        print()
+        handle_list()
 
 
 def handle_remove(enode):
-    data.remove(enode)
-    print('Done.')
+    if can_remove_enode(enode):
+        data.remove(enode)
+        print()
+        handle_list()
+
+
+def handle_remove_all():
+    global data
+
+    print('Removing {0} entries.\n'.format(len(data)))
+    data = []
     handle_list()
 
 
-
 def main():
-
     args = parse_args()
 
     data_file = args.data
@@ -121,7 +129,10 @@ def main():
         handle_add(args.enode)
 
     if args.command == 'remove' or args.command == 'rm':
-        handle_remove(args.enode)
+        if args.enode == 'all':
+            handle_remove_all()
+        else:
+            handle_remove(args.enode)
 
     write_data(data_file)
 
