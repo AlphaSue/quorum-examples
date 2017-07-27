@@ -2,7 +2,6 @@
 
 # stop if error
 set -e
-
 # utils
 log() {
   echo "[$(date +"%T")] ${1}"
@@ -45,7 +44,11 @@ cp -rf static-nodes.json node/
 
 if [ "$1" == "console" ]; then
   log "starting node..."
-  geth --datadir node $ARGS --port 33000 --verbosity 3 &>/dev/null &
+  geth --datadir node $ARGS --port 33000 --verbosity 3 \
+    --voteaccount "898b1d83a80871b599675cdbf0a221fe394e5ffb" --votepassword "" \
+    --blockmakeraccount "0xa3436ff6f950604649ac5172bc527f88f99bd68d" \
+    --blockmakerpassword "" \
+    &>/dev/null &
 
   log "waiting 3 seconds for node to start..."
   sleep 3
@@ -53,6 +56,9 @@ if [ "$1" == "console" ]; then
 
 else
   log "starting node..."
-  geth --datadir node $ARGS --port 33000 --verbosity 3
+  geth --datadir node $ARGS --port 33000 --verbosity 3 \
+    --voteaccount "898b1d83a80871b599675cdbf0a221fe394e5ffb" --votepassword "" \
+    --blockmakeraccount "0xa3436ff6f950604649ac5172bc527f88f99bd68d" \
+    --blockmakerpassword ""
 
 fi

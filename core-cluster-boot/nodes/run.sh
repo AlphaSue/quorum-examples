@@ -47,12 +47,6 @@ if [ ! -d "node/geth" ] || [ ! -d "node2/geth" ]; then
   exit 1
 fi
 
-# check if geth nodes have different keys
-if [ "$(cat node/geth/nodekey)" == "$(cat node2/geth/nodekey)" ]; then
-  log "Nodekeys are the same. You must execute 'init.sh' to generate new ones"
-  exit 1
-fi
-
 # start node 1
 log "copying static-nodes to node"
 cp -rf static-nodes.json node/
