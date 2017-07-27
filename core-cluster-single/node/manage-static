@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 
-import argparse, json, pprint, re
+import argparse, json, re
+from pprint import PrettyPrinter
 
+version = '0.0.3'
 data = []
-pp = pprint.PrettyPrinter(compact=True)
+pp = PrettyPrinter(compact=True)
 
 def valid_enode(e):
     try:
@@ -40,7 +42,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-d', '--data', default="static-nodes.json",
                         help='specify path to static-nodes.json')
-    parser.add_argument('--version', action='version', version='%(prog)s v0.0.2')
+    parser.add_argument('--version', action='version', version='%(prog)s v{}'.format(version))
     subparsers = parser.add_subparsers(help='Commands', dest='command')
 
     # list parser
