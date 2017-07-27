@@ -40,6 +40,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-d', '--data', default="static_nodes.json",
                         help='specify path to static_nodes.json')
+    parser.add_argument('--version', action='version', version='%(prog)s v0.0.1')
     subparsers = parser.add_subparsers(help='Commands', dest='command')
 
     # list parser
