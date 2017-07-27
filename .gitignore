@@ -1,7 +1,9 @@
 .vagrant
 .DS_Store
 
-**/node/geth/**
-**/node2/geth/**
+core-cluster-boot/nodes/node/geth/**
+core-cluster-boot/nodes/node2/geth/**
+core-cluster-single/node/node/**
+single-node/node/node/**
 
 ubuntu-xenial-16.04-cloudimg-console.log
