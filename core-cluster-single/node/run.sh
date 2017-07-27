@@ -25,17 +25,15 @@ ARGS="--networkid $NETWORK_ID --rpc --rpcaddr 0.0.0.0 --rpcapi admin,db,eth,debu
 kill-if-running bootnode constellation-node geth
 
 # start constellation
+if [ -d "constellation" ]; then
+    log "preparing constellation for node..."
+    constellation-node --generatekeys=constellation/node
+fi
+
 log "starting constellation node on port 9000..."
 constellation-node constellation/node.conf &>/dev/null &
 
 # start geth
-
-# configure node
-if [ -d "constellation" ]; then
-    log "preparing constellation for node..."
-    constellation-node --generate-keys=constellation/node
-fi
-
 if [ -d "node" ]; then
     log "preparing node..."
     geth --datadir node init genesis.json
