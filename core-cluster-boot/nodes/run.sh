@@ -54,32 +54,23 @@ geth --datadir node $ARGS --port 33000 \
   --blockmakeraccount "0xca843569e3427144cead5e4d5999a3d0ccf92b8e" \
   --blockmakerpassword "" &>/dev/null &
 
-
 # start node 2
 log "copying static-nodes to node2"
 cp -rf static-nodes.json node/
 
+log "starting node at 127.0.0.1:33000 (8545)..."
+geth --datadir node2 $ARGS --port 33000 --rpcport 8545 \
+  --verbosity 5 \
+  --blockmakeraccount "0xa0efc843a204d1ccdb1854b2735f064e9bfdd18f" \
+  --blockmakerpassword "" &>/dev/null &
+
 if [ "$1" == "console" ]; then
 
-ATTACH_NODE=${2-node}
+  ATTACH_NODE=${2-node}
 
-log "starting node at 127.0.0.1:33001 (8546)..."
-geth --datadir node2 $ARGS --port 33001 --rpcport 8546 \
-  --verbosity 5 \
-  --blockmakeraccount "0xa0efc843a204d1ccdb1854b2735f064e9bfdd18f" \
-  --blockmakerpassword "" &>/dev/null &
-
-log "waiting 3s for node to start"
-sleep 3
-geth attach ${ATTACH_NODE}/geth.ipc
-
-else # no output or console
-
-log "starting node at 127.0.0.1:33001 (8546)..."
-geth --datadir node2 $ARGS --port 33001 --rpcport 8546 \
-  --verbosity 5 \
-  --blockmakeraccount "0xa0efc843a204d1ccdb1854b2735f064e9bfdd18f" \
-  --blockmakerpassword "" &>/dev/null &
+  log "waiting 3s for node to start"
+  sleep 3
+  geth attach ${ATTACH_NODE}/geth.ipc
 
 fi
 
