@@ -41,8 +41,15 @@ constellation-node constellation/node.conf &>/dev/null &
 log "starting constellation for node 2 on port 9001..."
 constellation-node constellation2/node.conf &>/dev/null &
 
+# check if geth nodes have been initialized
 if [ ! -d "node/geth" ] || [ ! -d "node2/geth" ]; then
   log "You must execute 'init.sh' before running"
+  exit 1
+fi
+
+# check if geth nodes have different keys
+if [ "$(cat node/geth/nodekey)" == "$(cat node2/geth/nodekey)" ]; then
+  log "Nodekeys are the same. You must execute 'init.sh' to generate new ones"
   exit 1
 fi
 

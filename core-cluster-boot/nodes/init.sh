@@ -12,12 +12,16 @@ bootnode -addr [::]:10000 -genkey bootnode/bootkey -writeaddress > bootnode/addr
 
 
 # configure constellation node
-log "preparing constellation for node..."
-constellation-node --generatekeys=constellation/node
+if [ ! -f "constellation/node.key" ]; then
+  log "preparing constellation for node..."
+  constellation-node --generatekeys=constellation/node
+fi
 
 # configure constellation node 2
-log "preparing constellation for node2..."
-constellation-node --generatekeys=constellation2/node
+if [ ! -f "constellation2/node.key" ]; then
+  log "preparing constellation for node2..."
+  constellation-node --generatekeys=constellation2/node
+fi
 
 
 # configure node

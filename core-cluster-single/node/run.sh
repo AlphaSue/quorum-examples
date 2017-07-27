@@ -34,7 +34,7 @@ log "starting constellation node on port 9000..."
 constellation-node constellation/node.conf &>/dev/null &
 
 # start geth
-if [ ! -d "node" ]; then
+if [ ! -d "node/geth" ]; then
     mkdir node
     log "preparing node..."
     geth --datadir node init genesis.json
