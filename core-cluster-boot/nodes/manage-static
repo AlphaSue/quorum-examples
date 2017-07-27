@@ -38,9 +38,9 @@ def parse_args():
     description = ('Manages static-nodes.json file '
                    'for Stentor Blockchain core-cluster nodes')
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('-d', '--data', default="static_nodes.json",
-                        help='specify path to static_nodes.json')
-    parser.add_argument('--version', action='version', version='%(prog)s v0.0.1')
+    parser.add_argument('-d', '--data', default="static-nodes.json",
+                        help='specify path to static-nodes.json')
+    parser.add_argument('--version', action='version', version='%(prog)s v0.0.2')
     subparsers = parser.add_subparsers(help='Commands', dest='command')
 
     # list parser
