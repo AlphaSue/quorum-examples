@@ -1,2 +1,2 @@
 #!/bin/bash
-killall geth bootnode constellation-node
+killall geth constellation-node
