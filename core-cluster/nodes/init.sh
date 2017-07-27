@@ -6,12 +6,12 @@ log() {
 }
 
 # configure bootnode
-#log "preparing bootnode..."
-#bootnode -addr [::]:10000 -genkey bootnode/bootkey -writeaddress > bootnode/addr
+log "preparing bootnode..."
+bootnode -addr [::]:10000 -genkey bootnode/bootkey -writeaddress > bootnode/addr
 
 # configure node
-#log "preparing node..."
-#geth --datadir node init genesis.json
+log "preparing node..."
+geth --datadir node init genesis.json
 
 # configure 2node
 log "preparing node..."
