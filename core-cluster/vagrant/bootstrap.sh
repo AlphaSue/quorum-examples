@@ -8,8 +8,9 @@ apt-get update
 apt-get install -y build-essential unzip libdb-dev libsodium-dev zlib1g-dev libtinfo-dev solc sysvbanner wrk
 
 # install constellation
-CONSTELLATION_VERSION=0.1.0
-CONSTELLATION_FILE="constellation-${CONSTELLATION_VERSION}-ubuntu1604" wget -q https://github.com/jpmorganchase/constellation/releases/download/v${CONSTELLATION_VERSION}/${CONSTELLATION_FILE}.tar.xz
+CONSTELLATION_VERSION="0.1.0"
+CONSTELLATION_FILE="constellation-${CONSTELLATION_VERSION}-ubuntu1604"
+wget -q https://github.com/jpmorganchase/constellation/releases/download/v${CONSTELLATION_VERSION}/${CONSTELLATION_FILE}.tar.xz
 tar xvf ${CONSTELLATION_FILE}.tar.xz
 cp ${CONSTELLATION_FILE}/constellation-node /usr/local/bin && chmod 0755 /usr/local/bin/constellation-node
 rm -rf ${CONSTELLATION_FILE}.tar.xz ${CONSTELLATION_FILE}
@@ -34,7 +35,7 @@ rm -rf stentor-blockchain
 
 git clone https://github.com/AlphaSue/stentor-examples.git
 chown -R ubuntu:ubuntu /home/ubuntu/stentor-examples
-ln -s stentor-examples/core-cluster/nodes ~/nodes
+ln -s stentor-examples/core-cluster/nodes .
 
 # done!
 echo
