@@ -3,7 +3,7 @@
 import argparse, json, re
 from pprint import PrettyPrinter
 
-version = '0.0.4'
+version = '0.0.5'
 data = []
 pp = PrettyPrinter(compact=True)
 
@@ -65,7 +65,7 @@ def load_data(data_file):
 
 def write_data(data_file):
     with open(data_file, 'w+') as f:
-        f.write(json.dumps(data))
+        f.write(json.dumps(data, indent=2))
 
 
 def has_enode(enode):
