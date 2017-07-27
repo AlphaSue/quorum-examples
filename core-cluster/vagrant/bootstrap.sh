@@ -9,8 +9,7 @@ apt-get install -y build-essential unzip libdb-dev libsodium-dev zlib1g-dev libt
 
 # install constellation
 CONSTELLATION_VERSION=0.1.0
-CONSTELLATION_FILE="constellation-${CONSTELLATION_VERSION}-ubuntu1604"
-wget -q https://github.com/jpmorganchase/constellation/releases/download/v${CONSTELLATION_VERSION}/${CONSTELLATION_FILE}.tar.xz
+CONSTELLATION_FILE="constellation-${CONSTELLATION_VERSION}-ubuntu1604" wget -q https://github.com/jpmorganchase/constellation/releases/download/v${CONSTELLATION_VERSION}/${CONSTELLATION_FILE}.tar.xz
 tar xvf ${CONSTELLATION_FILE}.tar.xz
 cp ${CONSTELLATION_FILE}/constellation-node /usr/local/bin && chmod 0755 /usr/local/bin/constellation-node
 rm -rf ${CONSTELLATION_FILE}.tar.xz ${CONSTELLATION_FILE}
@@ -31,13 +30,15 @@ make all
 cp build/bin/geth /usr/local/bin
 cp build/bin/bootnode /usr/local/bin
 popd >/dev/null
+rm -rf stentor-blockchain
 
-#cp experiment /home/ubuntu/experiment
-#chown -R ubuntu:ubuntu /home/ubuntu/experiment
+git clone https://github.com/AlphaSue/stentor-examples.git
+chown -R ubuntu:ubuntu /home/ubuntu/stentor-examples
+ln -s stentor-examples/core-cluster/nodes ~/nodes
 
 # done!
 echo
 banner "Stentor"
 echo
-echo 'The Stentor vagrant instance has been provisioned. Examples are available in ~/stentor-examples inside the instance.'
+echo 'The Stentor vagrant instance has been provisioned. Core cluster setup is at the 'nodes' directory inside the instance.'
 echo "Use 'vagrant ssh' to open a terminal, 'vagrant suspend' to stop the instance, and 'vagrant destroy' to remove it."

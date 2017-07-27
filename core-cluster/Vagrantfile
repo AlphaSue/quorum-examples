@@ -1,11 +1,10 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/xenial64"
   config.vm.provision :shell, path: "vagrant/bootstrap.sh"
-  config.vm.network "forwarded_port", guest: 8545, guest_ip: 'localhost', host: 8545
   config.vm.network "forwarded_port", guest: 8546, guest_ip: 'localhost', host: 8546
-  config.vm.network "forwarded_port", guest: 33000, guest_ip: 'localhost', host: 33000
+  config.vm.network "forwarded_port", guest: 8547, guest_ip: 'localhost', host: 8547
   config.vm.network "forwarded_port", guest: 33001, guest_ip: 'localhost', host: 33001
-  config.vm.provision "file", source: "./nodes", destination: "nodes"
+  config.vm.network "forwarded_port", guest: 33002, guest_ip: 'localhost', host: 33002
   config.vm.provider "virtualbox" do |v|
     v.memory = 4096
   end
